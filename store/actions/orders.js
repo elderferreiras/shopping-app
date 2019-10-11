@@ -6,8 +6,9 @@ export const ADD_ORDER = 'ADD_ORDER';
 export const SET_ORDERS = 'SET_ORDERS';
 
 export const fetchOrders = () => {
-    return async dispatch => {
-        const response = await fetch('https://rn-complete-guide-f81a2.firebaseio.com/orders/u1.json');
+    return async (dispatch, getState) => {
+        const userId = getState().auth.userId;
+        const response = await fetch(`https://rn-complete-guide-f81a2.firebaseio.com/orders/${userId}.json`);
 
         const data = await response.json();
 
@@ -28,10 +29,12 @@ export const fetchOrders = () => {
     };
 };
 export const addOrder = (cartItems, totalAmount) => {
-    return async dispatch => {
+    return async (dispatch, getState) => {
+        const token = getState().auth.token;
+        const userId = getState().auth.userId;
         const date = new Date();
 
-        const response = await fetch('https://rn-complete-guide-f81a2.firebaseio.com/orders/u1.json', {
+        const response = await fetch(`https://rn-complete-guide-f81a2.firebaseio.com/orders/${userId}.json?auth=${token}`, {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json'

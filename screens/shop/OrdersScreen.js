@@ -1,5 +1,5 @@
 import React, {useEffect} from 'react';
-import {FlatList, Platform, Text} from "react-native";
+import {FlatList, Platform, Text, View} from "react-native";
 import {useDispatch, useSelector} from "react-redux";
 import {HeaderButtons, Item} from "react-navigation-header-buttons";
 import HeaderButton from '../../components/UI/HeaderButton';
@@ -13,6 +13,12 @@ const OrdersScreen = props => {
     useEffect(() => {
         dispatch(ordersActions.fetchOrders());
     }, [dispatch]);
+
+    if(orders.length === 0) {
+        return <View style={{flex: 1, justifyContent: 'center', alignItems: 'center'}}>
+            <Text>No orders found.</Text>
+        </View>
+    }
 
     return <FlatList data={orders} keyExtractor={(item) => item.id}
                      renderItem={data => <OrderItem amount={data.item.totalAmount} date={data.item.readableDate} items={data.item.items}/>}/>

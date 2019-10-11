@@ -8,11 +8,14 @@ import ordersReducer from './store/reducers/orders';
 import { AppLoading } from 'expo';
 import * as Font from 'expo-font';
 import thunk from 'redux-thunk';
+import authReducer from './store/reducers/auth';
+import NavigationContainer from "./navigation/NavigationContainer";
 
 const rootReducer = combineReducers({
     products: productsReducer,
     cart: cartReducer,
-    orders: ordersReducer
+    orders: ordersReducer,
+    auth: authReducer
 });
 
 const fetchFonts = () => {
@@ -34,7 +37,7 @@ export default function App() {
     }
     return (
         <Provider store={store}>
-            <ShopNavigator/>
+            <NavigationContainer/>
         </Provider>
     );
 }
